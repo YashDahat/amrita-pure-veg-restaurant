@@ -6,8 +6,10 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
 
+import com.amritapurevegrestaurant.enums.ReservationStatus;
+
 import java.time.Instant;
-import java.time.OffsetDateTime;
+import java.time.LocalDateTime;
 import java.util.UUID;
 
 @Entity
@@ -27,14 +29,14 @@ public class Reservation {
     @Column(nullable = false, length = 20) // Assuming a standard phone number length
     private String customerPhone;
 
-    @Column(nullable = false, length = 100) // Assuming a standard email length
+    @Column(nullable = true, length = 100) // Assuming a standard email length
     private String customerEmail;
 
     @Column(nullable = false)
-    private int numberOfGuests;
+    private int partySize;
 
     @Column(nullable = false)
-    private OffsetDateTime reservationTime;
+    private LocalDateTime reservationTime;
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)

@@ -26,7 +26,7 @@ public class MenuItem {
     @Column(name = "name", nullable = false, length = 100)
     private String name;
 
-    @Column(name = "description", length = 255)
+    @Column(name = "description", length = 500)
     private String description;
 
     @Column(name = "price", nullable = false, precision = 10, scale = 2)
@@ -35,8 +35,8 @@ public class MenuItem {
     @Column(name = "image_url")
     private String imageUrl;
 
-    @Column(name = "is_available", nullable = false)
-    private boolean isAvailable;
+    @Column(name = "is_special", nullable = false)
+    private boolean isSpecial;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "category_id", nullable = false)

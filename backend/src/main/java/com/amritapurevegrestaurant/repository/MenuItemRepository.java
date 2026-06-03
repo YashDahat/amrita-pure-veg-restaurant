@@ -17,4 +17,12 @@ public interface MenuItemRepository extends JpaRepository<MenuItem, UUID> {
      * @return A list of MenuItem entities belonging to the specified category, ordered by price.
      */
     List<MenuItem> findAllByCategoryNameOrderByPriceAsc(String categoryName);
+
+    /**
+     * Finds all menu items that are marked as special.
+     *
+     * @param isSpecial A boolean indicating if the item is special (true) or not (false).
+     * @return A list of MenuItem entities that are marked as special.
+     */
+    List<MenuItem> findByIsSpecial(boolean isSpecial);
 }

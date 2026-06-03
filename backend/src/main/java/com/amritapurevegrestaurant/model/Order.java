@@ -1,5 +1,6 @@
 package com.amritapurevegrestaurant.model;
 
+import com.amritapurevegrestaurant.enums.OrderStatus;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -16,7 +17,7 @@ import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
 
 import java.math.BigDecimal;
-import java.time.Instant;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -42,7 +43,7 @@ public class Order {
     private String customerEmail;
 
     @OneToMany(mappedBy = "order", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<OrderItem> orderItems = new ArrayList<>();
+    private List<OrderItem> items = new ArrayList<>();
 
     @Column(nullable = false, precision = 10, scale = 2)
     private BigDecimal totalAmount;
@@ -58,15 +59,15 @@ public class Order {
     private String razorpayPaymentId;
 
     @CreationTimestamp
-    @Column(nullable = false, updatable = false)
-    private Instant createdAt;
+    @Column(name = "order_date", nullable = false, updatable = false)
+    private LocalDateTime orderDate;
 
     /**
      * Helper method to add an OrderItem to the order, ensuring bidirectional relationship consistency.
      * @param item The OrderItem to add.
      */
     public void addOrderItem(OrderItem item) {
-        orderItems.add(item);
+        items.add(item);
         item.setOrder(this);
     }
 
@@ -75,7 +76,7 @@ public class Order {
      * @param item The OrderItem to remove.
      */
     public void removeOrderItem(OrderItem item) {
-        orderItems.remove(item);
+        items.remove(item);
         item.setOrder(null);
     }
 }

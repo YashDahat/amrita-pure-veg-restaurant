@@ -31,6 +31,6 @@ public class OrderItem {
     @Column(name = "quantity", nullable = false)
     private int quantity;
 
-    @Column(name = "price_per_item", nullable = false, precision = 10, scale = 2)
-    private BigDecimal pricePerItem;
+    @Column(name = "price_at_order", nullable = false, precision = 10, scale = 2)
+    private BigDecimal priceAtOrder;
 }

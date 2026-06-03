@@ -45,3 +45,19 @@ This file tracks each generation attempt.
 - frontend/src/types/index.ts
 
 ---
+
+## Attempt 4 — 2026-06-03 [COMPLETED]
+
+**Business:** Amrita Pure Veg Restaurant
+**Category:** Vegetarian restaurant
+**Website Type:** FULL_PLATFORM
+
+**Must-Have Features:**
+- Mobile-First Responsive Design
+- Interactive Digital Menu with High-Quality Images
+- Online Ordering System with Razorpay Integration
+- Real-time Table Reservation System
+- Google Business Profile Integration & Schema Markup
+- Clear Contact Information, Hours, and Embedded Map
+
+---

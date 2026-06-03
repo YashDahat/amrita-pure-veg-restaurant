@@ -4,7 +4,7 @@
   "base_package" : "com.amritapurevegrestaurant",
   "project_dependencies" : {
     "spring_boot_starters" : [ "web", "data-jpa", "postgresql", "lombok", "validation", "actuator", "security", "mail" ],
-    "npm_packages" : [ "@tanstack/react-query", "react-hook-form", "zod", "axios", "react-router-dom", "tailwindcss", "lucide-react", "clsx", "tailwind-merge", "date-fns" ]
+    "npm_packages" : [ "@tanstack/react-query", "react-hook-form", "zod", "axios", "react-router-dom", "lucide-react", "tailwind-merge", "clsx" ]
   },
   "files" : [ {
     "file_name" : "MenuItem.java",
@@ -12,14 +12,14 @@
     "file_type" : "BACKEND",
     "layer" : "MODEL",
     "created_date" : "2024-05-22",
-    "updated_date" : "2024-05-22",
-    "status" : "PLANNED",
-    "description" : "Represents a single food item available on the menu.",
+    "updated_date" : "2026-06-03",
+    "status" : "GENERATED",
+    "description" : "Represents a single food item available on the restaurant's menu.",
     "public_functions" : [ ],
     "public_variables" : [ {
       "name" : "id",
       "type" : "UUID",
-      "description" : "Primary key, auto-generated."
+      "description" : "Primary key, generated automatically."
     }, {
       "name" : "name",
       "type" : "String",
@@ -27,66 +27,27 @@
     }, {
       "name" : "description",
       "type" : "String",
-      "description" : "Detailed description, max 255 chars."
+      "description" : "Detailed description of the item, max 500 chars."
     }, {
       "name" : "price",
       "type" : "BigDecimal",
-      "description" : "Price of the item, precision 10, scale 2."
+      "description" : "Price of the item, precision 10, scale 2, not null."
+    }, {
+      "name" : "category",
+      "type" : "String",
+      "description" : "Category of the item (e.g., 'Appetizers', 'Main Course'), not null, max 50 chars."
     }, {
       "name" : "imageUrl",
       "type" : "String",
-      "description" : "URL to a high-quality image of the item."
+      "description" : "URL to a high-quality image of the item, max 255 chars."
     }, {
-      "name" : "isAvailable",
+      "name" : "isSpecial",
       "type" : "boolean",
-      "description" : "Indicates if the item is currently available for ordering."
-    }, {
-      "name" : "category",
-      "type" : "MenuCategory",
-      "description" : "The category this item belongs to, Many-to-One relationship."
-    }, {
-      "name" : "createdAt",
-      "type" : "Instant",
-      "description" : "Timestamp of creation, not updatable."
-    }, {
-      "name" : "updatedAt",
-      "type" : "Instant",
-      "description" : "Timestamp of last update."
+      "description" : "Flag to indicate if this is a chef's special or promotional item."
     } ],
     "api_endpoints" : [ ],
     "api_endpoints_consumed" : [ ],
-    "imports_from" : [ "MenuCategory.java" ],
-    "depends_on" : [ ]
-  }, {
-    "file_name" : "MenuCategory.java",
-    "file_path" : "backend/src/main/java/com/amritapurevegrestaurant/model/MenuCategory.java",
-    "file_type" : "BACKEND",
-    "layer" : "MODEL",
-    "created_date" : "2024-05-22",
-    "updated_date" : "2024-05-22",
-    "status" : "PLANNED",
-    "description" : "Represents a category of menu items, e.g., 'Appetizers', 'Main Course'.",
-    "public_functions" : [ ],
-    "public_variables" : [ {
-      "name" : "id",
-      "type" : "UUID",
-      "description" : "Primary key, auto-generated."
-    }, {
-      "name" : "name",
-      "type" : "String",
-      "description" : "Name of the category, unique, not null, max 50 chars."
-    }, {
-      "name" : "displayOrder",
-      "type" : "int",
-      "description" : "Order in which to display the categories on the menu."
-    }, {
-      "name" : "menuItems",
-      "type" : "List<MenuItem>",
-      "description" : "List of items in this category, One-to-Many relationship."
-    } ],
-    "api_endpoints" : [ ],
-    "api_endpoints_consumed" : [ ],
-    "imports_from" : [ "MenuItem.java" ],
+    "imports_from" : [ ],
     "depends_on" : [ ]
   }, {
     "file_name" : "Order.java",
@@ -94,38 +55,38 @@
     "file_type" : "BACKEND",
     "layer" : "MODEL",
     "created_date" : "2024-05-22",
-    "updated_date" : "2024-05-22",
-    "status" : "PLANNED",
-    "description" : "Represents a customer's order.",
+    "updated_date" : "2026-06-03",
+    "status" : "GENERATED",
+    "description" : "Represents a customer's online order.",
     "public_functions" : [ ],
     "public_variables" : [ {
       "name" : "id",
       "type" : "UUID",
-      "description" : "Primary key, auto-generated."
+      "description" : "Primary key, generated automatically."
     }, {
       "name" : "customerName",
       "type" : "String",
-      "description" : "Name of the customer placing the order."
+      "description" : "Name of the customer, not null."
     }, {
       "name" : "customerPhone",
       "type" : "String",
-      "description" : "Contact phone number for the order."
+      "description" : "Contact phone number of the customer, not null."
     }, {
       "name" : "customerEmail",
       "type" : "String",
-      "description" : "Contact email for the order."
-    }, {
-      "name" : "orderItems",
-      "type" : "List<OrderItem>",
-      "description" : "List of items included in the order."
-    }, {
-      "name" : "totalAmount",
-      "type" : "BigDecimal",
-      "description" : "Total cost of the order."
+      "description" : "Contact email of the customer, not null."
     }, {
       "name" : "status",
       "type" : "OrderStatus",
-      "description" : "Current status of the order (e.g., PENDING, CONFIRMED)."
+      "description" : "Current status of the order (e.g., PENDING, CONFIRMED, CANCELLED)."
+    }, {
+      "name" : "totalAmount",
+      "type" : "BigDecimal",
+      "description" : "Total calculated amount for the order, precision 10, scale 2."
+    }, {
+      "name" : "orderDate",
+      "type" : "LocalDateTime",
+      "description" : "Timestamp when the order was placed."
     }, {
       "name" : "razorpayOrderId",
       "type" : "String",
@@ -135,13 +96,13 @@
       "type" : "String",
       "description" : "Payment ID from Razorpay after successful payment."
     }, {
-      "name" : "createdAt",
-      "type" : "Instant",
-      "description" : "Timestamp of creation."
+      "name" : "items",
+      "type" : "List<OrderItem>",
+      "description" : "List of items included in this order."
     } ],
     "api_endpoints" : [ ],
     "api_endpoints_consumed" : [ ],
-    "imports_from" : [ "OrderItem.java", "OrderStatus.java" ],
+    "imports_from" : [ "backend/src/main/java/com/amritapurevegrestaurant/model/OrderItem.java", "backend/src/main/java/com/amritapurevegrestaurant/enums/OrderStatus.java" ],
     "depends_on" : [ ]
   }, {
     "file_name" : "OrderItem.java",
@@ -149,18 +110,18 @@
     "file_type" : "BACKEND",
     "layer" : "MODEL",
     "created_date" : "2024-05-22",
-    "updated_date" : "2024-05-22",
-    "status" : "PLANNED",
-    "description" : "Represents a line item within an Order.",
+    "updated_date" : "2026-06-03",
+    "status" : "GENERATED",
+    "description" : "Represents a line item within an Order, linking a MenuItem with a quantity.",
     "public_functions" : [ ],
     "public_variables" : [ {
       "name" : "id",
       "type" : "UUID",
-      "description" : "Primary key, auto-generated."
+      "description" : "Primary key, generated automatically."
     }, {
       "name" : "order",
       "type" : "Order",
-      "description" : "The order this item belongs to."
+      "description" : "The parent order this item belongs to."
     }, {
       "name" : "menuItem",
       "type" : "MenuItem",
@@ -170,13 +131,13 @@
       "type" : "int",
       "description" : "Quantity of the menu item ordered."
     }, {
-      "name" : "pricePerItem",
+      "name" : "priceAtOrder",
       "type" : "BigDecimal",
-      "description" : "Price of the item at the time of order."
+      "description" : "Price of the single menu item at the time of order."
     } ],
     "api_endpoints" : [ ],
     "api_endpoints_consumed" : [ ],
-    "imports_from" : [ "Order.java", "MenuItem.java" ],
+    "imports_from" : [ "backend/src/main/java/com/amritapurevegrestaurant/model/Order.java", "backend/src/main/java/com/amritapurevegrestaurant/model/MenuItem.java" ],
     "depends_on" : [ ]
   }, {
     "file_name" : "Reservation.java",
@@ -184,56 +145,52 @@
     "file_type" : "BACKEND",
     "layer" : "MODEL",
     "created_date" : "2024-05-22",
-    "updated_date" : "2024-05-22",
-    "status" : "PLANNED",
-    "description" : "Represents a table reservation made by a customer.",
+    "updated_date" : "2026-06-03",
+    "status" : "GENERATED",
+    "description" : "Represents a customer's table reservation.",
     "public_functions" : [ ],
     "public_variables" : [ {
       "name" : "id",
       "type" : "UUID",
-      "description" : "Primary key, auto-generated."
+      "description" : "Primary key, generated automatically."
     }, {
       "name" : "customerName",
       "type" : "String",
-      "description" : "Name of the person who made the reservation."
+      "description" : "Name of the customer making the reservation, not null."
     }, {
       "name" : "customerPhone",
       "type" : "String",
-      "description" : "Contact phone number for the reservation."
+      "description" : "Contact phone number for the reservation, not null."
     }, {
       "name" : "customerEmail",
       "type" : "String",
       "description" : "Contact email for the reservation."
     }, {
-      "name" : "numberOfGuests",
-      "type" : "int",
-      "description" : "Number of people in the party."
-    }, {
       "name" : "reservationTime",
-      "type" : "OffsetDateTime",
-      "description" : "The date and time of the reservation."
+      "type" : "LocalDateTime",
+      "description" : "The date and time of the reservation, not null."
+    }, {
+      "name" : "partySize",
+      "type" : "int",
+      "description" : "The number of guests in the party, not null."
     }, {
       "name" : "status",
       "type" : "ReservationStatus",
-      "description" : "Current status of the reservation (e.g., REQUESTED, CONFIRMED)."
-    }, {
-      "name" : "createdAt",
-      "type" : "Instant",
-      "description" : "Timestamp of creation."
+      "description" : "Current status of the reservation (e.g., REQUESTED, CONFIRMED, CANCELLED)."
     } ],
     "api_endpoints" : [ ],
     "api_endpoints_consumed" : [ ],
-    "imports_from" : [ "ReservationStatus.java" ],
+    "imports_from" : [ "backend/src/main/java/com/amritapurevegrestaurant/enums/ReservationStatus.java" ],
     "depends_on" : [ ]
   }, {
     "file_name" : "OrderStatus.java",
-    "file_path" : "backend/src/main/java/com/amritapurevegrestaurant/model/OrderStatus.java",
+    "file_path" : "backend/src/main/java/com/amritapurevegrestaurant/enums/OrderStatus.java",
     "file_type" : "BACKEND",
     "layer" : "MODEL",
     "created_date" : "2024-05-22",
-    "updated_date" : "2024-05-22",
-    "status" : "PLANNED",
-    "description" : "Enum for the status of an order.",
+    "updated_date" : "2026-06-03",
+    "status" : "GENERATED",
+    "description" : "Enumeration for the possible states of an order.",
     "public_functions" : [ ],
     "public_variables" : [ {
       "name" : "PENDING_PAYMENT",
@@ -242,19 +199,19 @@
     }, {
       "name" : "CONFIRMED",
       "type" : "enum",
-      "description" : "Payment received, order confirmed."
+      "description" : "Payment received, order is confirmed."
     }, {
       "name" : "PREPARING",
       "type" : "enum",
-      "description" : "Kitchen is preparing the order."
+      "description" : "Order is being prepared in the kitchen."
     }, {
       "name" : "READY_FOR_PICKUP",
       "type" : "enum",
       "description" : "Order is ready for pickup."
     }, {
-      "name" : "DELIVERED",
+      "name" : "COMPLETED",
       "type" : "enum",
-      "description" : "Order has been delivered/picked up."
+      "description" : "Order has been picked up/delivered."
     }, {
       "name" : "CANCELLED",
       "type" : "enum",
@@ -266,13 +223,13 @@
     "depends_on" : [ ]
   }, {
     "file_name" : "ReservationStatus.java",
-    "file_path" : "backend/src/main/java/com/amritapurevegrestaurant/model/ReservationStatus.java",
+    "file_path" : "backend/src/main/java/com/amritapurevegrestaurant/enums/ReservationStatus.java",
     "file_type" : "BACKEND",
     "layer" : "MODEL",
     "created_date" : "2024-05-22",
-    "updated_date" : "2024-05-22",
-    "status" : "PLANNED",
-    "description" : "Enum for the status of a reservation.",
+    "updated_date" : "2026-06-03",
+    "status" : "GENERATED",
+    "description" : "Enumeration for the possible states of a reservation.",
     "public_functions" : [ ],
     "public_variables" : [ {
       "name" : "REQUESTED",
@@ -296,44 +253,266 @@
     "imports_from" : [ ],
     "depends_on" : [ ]
   }, {
+    "file_name" : "MenuItemDTO.java",
+    "file_path" : "backend/src/main/java/com/amritapurevegrestaurant/dto/MenuItemDTO.java",
+    "file_type" : "BACKEND",
+    "layer" : "DTO",
+    "created_date" : "2024-05-22",
+    "updated_date" : "2026-06-03",
+    "status" : "GENERATED",
+    "description" : "Data Transfer Object for menu item details.",
+    "public_functions" : [ ],
+    "public_variables" : [ {
+      "name" : "id",
+      "type" : "UUID",
+      "description" : "Unique identifier for the menu item."
+    }, {
+      "name" : "name",
+      "type" : "String",
+      "description" : "Name of the menu item."
+    }, {
+      "name" : "description",
+      "type" : "String",
+      "description" : "Description of the item."
+    }, {
+      "name" : "price",
+      "type" : "BigDecimal",
+      "description" : "Price of the item."
+    }, {
+      "name" : "category",
+      "type" : "String",
+      "description" : "Category of the item."
+    }, {
+      "name" : "imageUrl",
+      "type" : "String",
+      "description" : "URL for the item's image."
+    }, {
+      "name" : "isSpecial",
+      "type" : "boolean",
+      "description" : "Indicates if the item is a special."
+    } ],
+    "api_endpoints" : [ ],
+    "api_endpoints_consumed" : [ ],
+    "imports_from" : [ ],
+    "depends_on" : [ ]
+  }, {
+    "file_name" : "CreateOrderRequestDTO.java",
+    "file_path" : "backend/src/main/java/com/amritapurevegrestaurant/dto/CreateOrderRequestDTO.java",
+    "file_type" : "BACKEND",
+    "layer" : "DTO",
+    "created_date" : "2024-05-22",
+    "updated_date" : "2026-06-03",
+    "status" : "GENERATED",
+    "description" : "DTO for creating a new order.",
+    "public_functions" : [ ],
+    "public_variables" : [ {
+      "name" : "customerName",
+      "type" : "String",
+      "description" : "Customer's name. @NotBlank"
+    }, {
+      "name" : "customerPhone",
+      "type" : "String",
+      "description" : "Customer's phone number. @NotBlank @Pattern(regexp='...')"
+    }, {
+      "name" : "customerEmail",
+      "type" : "String",
+      "description" : "Customer's email address. @NotBlank @Email"
+    }, {
+      "name" : "items",
+      "type" : "List<OrderItemRequestDTO>",
+      "description" : "List of items in the order. @NotEmpty"
+    } ],
+    "api_endpoints" : [ ],
+    "api_endpoints_consumed" : [ ],
+    "imports_from" : [ "backend/src/main/java/com/amritapurevegrestaurant/dto/OrderItemRequestDTO.java" ],
+    "depends_on" : [ ]
+  }, {
+    "file_name" : "OrderItemRequestDTO.java",
+    "file_path" : "backend/src/main/java/com/amritapurevegrestaurant/dto/OrderItemRequestDTO.java",
+    "file_type" : "BACKEND",
+    "layer" : "DTO",
+    "created_date" : "2024-05-22",
+    "updated_date" : "2026-06-03",
+    "status" : "GENERATED",
+    "description" : "DTO for a single item within an order creation request.",
+    "public_functions" : [ ],
+    "public_variables" : [ {
+      "name" : "menuItemId",
+      "type" : "UUID",
+      "description" : "ID of the menu item. @NotNull"
+    }, {
+      "name" : "quantity",
+      "type" : "int",
+      "description" : "Quantity of the item. @Min(1)"
+    } ],
+    "api_endpoints" : [ ],
+    "api_endpoints_consumed" : [ ],
+    "imports_from" : [ ],
+    "depends_on" : [ ]
+  }, {
+    "file_name" : "OrderResponseDTO.java",
+    "file_path" : "backend/src/main/java/com/amritapurevegrestaurant/dto/OrderResponseDTO.java",
+    "file_type" : "BACKEND",
+    "layer" : "DTO",
+    "created_date" : "2024-05-22",
+    "updated_date" : "2026-06-03",
+    "status" : "GENERATED",
+    "description" : "DTO returned after successfully creating an order, containing payment details.",
+    "public_functions" : [ ],
+    "public_variables" : [ {
+      "name" : "orderId",
+      "type" : "UUID",
+      "description" : "The unique ID of the created order in our system."
+    }, {
+      "name" : "status",
+      "type" : "String",
+      "description" : "The initial status of the order (e.g., PENDING_PAYMENT)."
+    }, {
+      "name" : "totalAmount",
+      "type" : "BigDecimal",
+      "description" : "The total amount to be paid."
+    }, {
+      "name" : "razorpayOrderId",
+      "type" : "String",
+      "description" : "The order ID from Razorpay to be used by the frontend."
+    }, {
+      "name" : "razorpayApiKey",
+      "type" : "String",
+      "description" : "The public Razorpay API key for the frontend."
+    } ],
+    "api_endpoints" : [ ],
+    "api_endpoints_consumed" : [ ],
+    "imports_from" : [ ],
+    "depends_on" : [ ]
+  }, {
+    "file_name" : "CreateReservationRequestDTO.java",
+    "file_path" : "backend/src/main/java/com/amritapurevegrestaurant/dto/CreateReservationRequestDTO.java",
+    "file_type" : "BACKEND",
+    "layer" : "DTO",
+    "created_date" : "2024-05-22",
+    "updated_date" : "2026-06-03",
+    "status" : "GENERATED",
+    "description" : "DTO for creating a new table reservation.",
+    "public_functions" : [ ],
+    "public_variables" : [ {
+      "name" : "customerName",
+      "type" : "String",
+      "description" : "Customer's name. @NotBlank"
+    }, {
+      "name" : "customerPhone",
+      "type" : "String",
+      "description" : "Customer's phone number. @NotBlank"
+    }, {
+      "name" : "customerEmail",
+      "type" : "String",
+      "description" : "Customer's email address. @Email"
+    }, {
+      "name" : "reservationTime",
+      "type" : "LocalDateTime",
+      "description" : "Requested date and time for the reservation. @Future"
+    }, {
+      "name" : "partySize",
+      "type" : "int",
+      "description" : "Number of guests. @Min(1)"
+    } ],
+    "api_endpoints" : [ ],
+    "api_endpoints_consumed" : [ ],
+    "imports_from" : [ ],
+    "depends_on" : [ ]
+  }, {
+    "file_name" : "ReservationResponseDTO.java",
+    "file_path" : "backend/src/main/java/com/amritapurevegrestaurant/dto/ReservationResponseDTO.java",
+    "file_type" : "BACKEND",
+    "layer" : "DTO",
+    "created_date" : "2024-05-22",
+    "updated_date" : "2026-06-03",
+    "status" : "GENERATED",
+    "description" : "DTO returned after successfully creating a reservation.",
+    "public_functions" : [ ],
+    "public_variables" : [ {
+      "name" : "reservationId",
+      "type" : "UUID",
+      "description" : "The unique ID of the created reservation."
+    }, {
+      "name" : "customerName",
+      "type" : "String",
+      "description" : "Customer's name."
+    }, {
+      "name" : "reservationTime",
+      "type" : "LocalDateTime",
+      "description" : "The confirmed date and time of the reservation."
+    }, {
+      "name" : "partySize",
+      "type" : "int",
+      "description" : "The number of guests."
+    }, {
+      "name" : "status",
+      "type" : "String",
+      "description" : "The initial status of the reservation (e.g., REQUESTED)."
+    } ],
+    "api_endpoints" : [ ],
+    "api_endpoints_consumed" : [ ],
+    "imports_from" : [ ],
+    "depends_on" : [ ]
+  }, {
+    "file_name" : "ErrorResponse.java",
+    "file_path" : "backend/src/main/java/com/amritapurevegrestaurant/dto/ErrorResponse.java",
+    "file_type" : "BACKEND",
+    "layer" : "DTO",
+    "created_date" : "2024-05-22",
+    "updated_date" : "2026-06-03",
+    "status" : "GENERATED",
+    "description" : "A generic DTO for returning error details in API responses.",
+    "public_functions" : [ ],
+    "public_variables" : [ {
+      "name" : "timestamp",
+      "type" : "LocalDateTime",
+      "description" : "Timestamp of when the error occurred."
+    }, {
+      "name" : "status",
+      "type" : "int",
+      "description" : "HTTP status code."
+    }, {
+      "name" : "error",
+      "type" : "String",
+      "description" : "Short error description (e.g., 'Not Found')."
+    }, {
+      "name" : "message",
+      "type" : "String",
+      "description" : "Detailed error message."
+    }, {
+      "name" : "path",
+      "type" : "String",
+      "description" : "The request path that caused the error."
+    } ],
+    "api_endpoints" : [ ],
+    "api_endpoints_consumed" : [ ],
+    "imports_from" : [ ],
+    "depends_on" : [ ]
+  }, {
     "file_name" : "MenuItemRepository.java",
     "file_path" : "backend/src/main/java/com/amritapurevegrestaurant/repository/MenuItemRepository.java",
     "file_type" : "BACKEND",
     "layer" : "REPOSITORY",
     "created_date" : "2024-05-22",
-    "updated_date" : "2024-05-22",
-    "status" : "PLANNED",
+    "updated_date" : "2026-06-03",
+    "status" : "GENERATED",
     "description" : "Spring Data JPA repository for MenuItem entities.",
     "public_functions" : [ {
-      "name" : "findAllByCategoryNameOrderByPriceAsc",
-      "parameters" : [ "String categoryName" ],
+      "name" : "findByCategory",
+      "parameters" : [ "String category" ],
       "return_type" : "List<MenuItem>",
-      "description" : "Finds all menu items in a given category, sorted by price."
+      "description" : "Finds all menu items belonging to a specific category."
+    }, {
+      "name" : "findByIsSpecial",
+      "parameters" : [ "boolean isSpecial" ],
+      "return_type" : "List<MenuItem>",
+      "description" : "Finds all menu items that are marked as special."
     } ],
     "public_variables" : [ ],
     "api_endpoints" : [ ],
     "api_endpoints_consumed" : [ ],
-    "imports_from" : [ "MenuItem.java" ],
-    "depends_on" : [ ]
-  }, {
-    "file_name" : "MenuCategoryRepository.java",
-    "file_path" : "backend/src/main/java/com/amritapurevegrestaurant/repository/MenuCategoryRepository.java",
-    "file_type" : "BACKEND",
-    "layer" : "REPOSITORY",
-    "created_date" : "2024-05-22",
-    "updated_date" : "2024-05-22",
-    "status" : "PLANNED",
-    "description" : "Spring Data JPA repository for MenuCategory entities.",
-    "public_functions" : [ {
-      "name" : "findAllByOrderByDisplayOrderAsc",
-      "parameters" : [ ],
-      "return_type" : "List<MenuCategory>",
-      "description" : "Finds all categories, ordered by their display order."
-    } ],
-    "public_variables" : [ ],
-    "api_endpoints" : [ ],
-    "api_endpoints_consumed" : [ ],
-    "imports_from" : [ "MenuCategory.java" ],
+    "imports_from" : [ "backend/src/main/java/com/amritapurevegrestaurant/model/MenuItem.java" ],
     "depends_on" : [ ]
   }, {
     "file_name" : "OrderRepository.java",
@@ -341,8 +520,8 @@
     "file_type" : "BACKEND",
     "layer" : "REPOSITORY",
     "created_date" : "2024-05-22",
-    "updated_date" : "2024-05-22",
-    "status" : "PLANNED",
+    "updated_date" : "2026-06-03",
+    "status" : "GENERATED",
     "description" : "Spring Data JPA repository for Order entities.",
     "public_functions" : [ {
       "name" : "findByRazorpayOrderId",
@@ -353,7 +532,7 @@
     "public_variables" : [ ],
     "api_endpoints" : [ ],
     "api_endpoints_consumed" : [ ],
-    "imports_from" : [ "Order.java" ],
+    "imports_from" : [ "backend/src/main/java/com/amritapurevegrestaurant/model/Order.java" ],
     "depends_on" : [ ]
   }, {
     "file_name" : "ReservationRepository.java",
@@ -361,240 +540,19 @@
     "file_type" : "BACKEND",
     "layer" : "REPOSITORY",
     "created_date" : "2024-05-22",
-    "updated_date" : "2024-05-22",
-    "status" : "PLANNED",
+    "updated_date" : "2026-06-03",
+    "status" : "GENERATED",
     "description" : "Spring Data JPA repository for Reservation entities.",
     "public_functions" : [ {
-      "name" : "findReservationsForTimeRange",
-      "parameters" : [ "OffsetDateTime start", "OffsetDateTime end" ],
+      "name" : "findByReservationTimeBetween",
+      "parameters" : [ "LocalDateTime start", "LocalDateTime end" ],
       "return_type" : "List<Reservation>",
-      "description" : "Finds all confirmed reservations within a given time window."
+      "description" : "Finds all reservations within a given time window."
     } ],
     "public_variables" : [ ],
     "api_endpoints" : [ ],
     "api_endpoints_consumed" : [ ],
-    "imports_from" : [ "Reservation.java" ],
-    "depends_on" : [ ]
-  }, {
-    "file_name" : "CreateOrderRequest.java",
-    "file_path" : "backend/src/main/java/com/amritapurevegrestaurant/dto/CreateOrderRequest.java",
-    "file_type" : "BACKEND",
-    "layer" : "DTO",
-    "created_date" : "2024-05-22",
-    "updated_date" : "2024-05-22",
-    "status" : "PLANNED",
-    "description" : "DTO for creating a new order.",
-    "public_functions" : [ ],
-    "public_variables" : [ {
-      "name" : "customerName",
-      "type" : "String",
-      "description" : "@NotBlank, @Size(max = 100)"
-    }, {
-      "name" : "customerPhone",
-      "type" : "String",
-      "description" : "@NotBlank, @Pattern for phone number"
-    }, {
-      "name" : "customerEmail",
-      "type" : "String",
-      "description" : "@NotBlank, @Email"
-    }, {
-      "name" : "items",
-      "type" : "List<OrderItemRequest>",
-      "description" : "@NotEmpty, list of items in the order."
-    } ],
-    "api_endpoints" : [ ],
-    "api_endpoints_consumed" : [ ],
-    "imports_from" : [ "OrderItemRequest.java" ],
-    "depends_on" : [ ]
-  }, {
-    "file_name" : "OrderItemRequest.java",
-    "file_path" : "backend/src/main/java/com/amritapurevegrestaurant/dto/OrderItemRequest.java",
-    "file_type" : "BACKEND",
-    "layer" : "DTO",
-    "created_date" : "2024-05-22",
-    "updated_date" : "2024-05-22",
-    "status" : "PLANNED",
-    "description" : "DTO representing a single item within an order creation request.",
-    "public_functions" : [ ],
-    "public_variables" : [ {
-      "name" : "menuItemId",
-      "type" : "UUID",
-      "description" : "@NotNull"
-    }, {
-      "name" : "quantity",
-      "type" : "int",
-      "description" : "@Min(1)"
-    } ],
-    "api_endpoints" : [ ],
-    "api_endpoints_consumed" : [ ],
-    "imports_from" : [ ],
-    "depends_on" : [ ]
-  }, {
-    "file_name" : "OrderResponse.java",
-    "file_path" : "backend/src/main/java/com/amritapurevegrestaurant/dto/OrderResponse.java",
-    "file_type" : "BACKEND",
-    "layer" : "DTO",
-    "created_date" : "2024-05-22",
-    "updated_date" : "2024-05-22",
-    "status" : "PLANNED",
-    "description" : "DTO for returning order details, including payment information.",
-    "public_functions" : [ ],
-    "public_variables" : [ {
-      "name" : "orderId",
-      "type" : "UUID",
-      "description" : "Internal order ID."
-    }, {
-      "name" : "razorpayOrderId",
-      "type" : "String",
-      "description" : "Razorpay's order ID, needed by frontend for checkout."
-    }, {
-      "name" : "totalAmount",
-      "type" : "BigDecimal",
-      "description" : "Total amount to be paid."
-    }, {
-      "name" : "status",
-      "type" : "String",
-      "description" : "Current status of the order."
-    } ],
-    "api_endpoints" : [ ],
-    "api_endpoints_consumed" : [ ],
-    "imports_from" : [ ],
-    "depends_on" : [ ]
-  }, {
-    "file_name" : "CreateReservationRequest.java",
-    "file_path" : "backend/src/main/java/com/amritapurevegrestaurant/dto/CreateReservationRequest.java",
-    "file_type" : "BACKEND",
-    "layer" : "DTO",
-    "created_date" : "2024-05-22",
-    "updated_date" : "2024-05-22",
-    "status" : "PLANNED",
-    "description" : "DTO for creating a new table reservation.",
-    "public_functions" : [ ],
-    "public_variables" : [ {
-      "name" : "customerName",
-      "type" : "String",
-      "description" : "@NotBlank"
-    }, {
-      "name" : "customerPhone",
-      "type" : "String",
-      "description" : "@NotBlank"
-    }, {
-      "name" : "customerEmail",
-      "type" : "String",
-      "description" : "@NotBlank, @Email"
-    }, {
-      "name" : "numberOfGuests",
-      "type" : "int",
-      "description" : "@Min(1)"
-    }, {
-      "name" : "reservationTime",
-      "type" : "OffsetDateTime",
-      "description" : "@NotNull, @Future"
-    } ],
-    "api_endpoints" : [ ],
-    "api_endpoints_consumed" : [ ],
-    "imports_from" : [ ],
-    "depends_on" : [ ]
-  }, {
-    "file_name" : "ReservationResponse.java",
-    "file_path" : "backend/src/main/java/com/amritapurevegrestaurant/dto/ReservationResponse.java",
-    "file_type" : "BACKEND",
-    "layer" : "DTO",
-    "created_date" : "2024-05-22",
-    "updated_date" : "2024-05-22",
-    "status" : "PLANNED",
-    "description" : "DTO for returning details of a created reservation.",
-    "public_functions" : [ ],
-    "public_variables" : [ {
-      "name" : "reservationId",
-      "type" : "UUID",
-      "description" : "The ID of the created reservation."
-    }, {
-      "name" : "customerName",
-      "type" : "String",
-      "description" : "Customer's name."
-    }, {
-      "name" : "numberOfGuests",
-      "type" : "int",
-      "description" : "Number of guests."
-    }, {
-      "name" : "reservationTime",
-      "type" : "OffsetDateTime",
-      "description" : "The confirmed time."
-    }, {
-      "name" : "status",
-      "type" : "String",
-      "description" : "The status of the reservation (e.g., 'REQUESTED')."
-    } ],
-    "api_endpoints" : [ ],
-    "api_endpoints_consumed" : [ ],
-    "imports_from" : [ ],
-    "depends_on" : [ ]
-  }, {
-    "file_name" : "MenuCategoryDto.java",
-    "file_path" : "backend/src/main/java/com/amritapurevegrestaurant/dto/MenuCategoryDto.java",
-    "file_type" : "BACKEND",
-    "layer" : "DTO",
-    "created_date" : "2024-05-22",
-    "updated_date" : "2024-05-22",
-    "status" : "PLANNED",
-    "description" : "DTO for representing a menu category with its items.",
-    "public_functions" : [ ],
-    "public_variables" : [ {
-      "name" : "id",
-      "type" : "UUID",
-      "description" : "Category ID."
-    }, {
-      "name" : "name",
-      "type" : "String",
-      "description" : "Category name."
-    }, {
-      "name" : "items",
-      "type" : "List<MenuItemDto>",
-      "description" : "List of menu items in this category."
-    } ],
-    "api_endpoints" : [ ],
-    "api_endpoints_consumed" : [ ],
-    "imports_from" : [ "MenuItemDto.java" ],
-    "depends_on" : [ ]
-  }, {
-    "file_name" : "MenuItemDto.java",
-    "file_path" : "backend/src/main/java/com/amritapurevegrestaurant/dto/MenuItemDto.java",
-    "file_type" : "BACKEND",
-    "layer" : "DTO",
-    "created_date" : "2024-05-22",
-    "updated_date" : "2024-05-22",
-    "status" : "PLANNED",
-    "description" : "DTO for representing a single menu item.",
-    "public_functions" : [ ],
-    "public_variables" : [ {
-      "name" : "id",
-      "type" : "UUID",
-      "description" : "Item ID."
-    }, {
-      "name" : "name",
-      "type" : "String",
-      "description" : "Item name."
-    }, {
-      "name" : "description",
-      "type" : "String",
-      "description" : "Item description."
-    }, {
-      "name" : "price",
-      "type" : "BigDecimal",
-      "description" : "Item price."
-    }, {
-      "name" : "imageUrl",
-      "type" : "String",
-      "description" : "Item image URL."
-    }, {
-      "name" : "isAvailable",
-      "type" : "boolean",
-      "description" : "Availability status."
-    } ],
-    "api_endpoints" : [ ],
-    "api_endpoints_consumed" : [ ],
-    "imports_from" : [ ],
+    "imports_from" : [ "backend/src/main/java/com/amritapurevegrestaurant/model/Reservation.java" ],
     "depends_on" : [ ]
   }, {
     "file_name" : "MenuService.java",
@@ -602,64 +560,99 @@
     "file_type" : "BACKEND",
     "layer" : "SERVICE",
     "created_date" : "2024-05-22",
-    "updated_date" : "2024-05-22",
-    "status" : "PLANNED",
-    "description" : "Handles business logic for retrieving menu information.",
+    "updated_date" : "2026-06-03",
+    "status" : "GENERATED",
+    "description" : "Business logic for managing the menu.",
     "public_functions" : [ {
-      "name" : "getFullMenu",
-      "parameters" : [ ],
-      "return_type" : "List<MenuCategoryDto>",
-      "description" : "Retrieves the entire menu, structured by category."
+      "name" : "getAllMenuItems",
+      "parameters" : [ "Optional<String> category" ],
+      "return_type" : "List<MenuItemDTO>",
+      "description" : "Retrieves all menu items, optionally filtered by category."
+    }, {
+      "name" : "getMenuItemById",
+      "parameters" : [ "UUID id" ],
+      "return_type" : "MenuItemDTO",
+      "description" : "Retrieves a single menu item by its ID."
     } ],
     "public_variables" : [ ],
     "api_endpoints" : [ ],
     "api_endpoints_consumed" : [ ],
-    "imports_from" : [ "MenuCategoryDto.java" ],
-    "depends_on" : [ "MenuCategoryRepository.java", "MenuItemRepository.java" ]
+    "imports_from" : [ "backend/src/main/java/com/amritapurevegrestaurant/dto/MenuItemDTO.java" ],
+    "depends_on" : [ "backend/src/main/java/com/amritapurevegrestaurant/repository/MenuItemRepository.java", "backend/src/main/java/com/amritapurevegrestaurant/exception/ResourceNotFoundException.java" ]
   }, {
     "file_name" : "OrderService.java",
     "file_path" : "backend/src/main/java/com/amritapurevegrestaurant/service/OrderService.java",
     "file_type" : "BACKEND",
     "layer" : "SERVICE",
     "created_date" : "2024-05-22",
-    "updated_date" : "2024-05-22",
-    "status" : "PLANNED",
-    "description" : "Handles business logic for creating and managing orders.",
+    "updated_date" : "2026-06-03",
+    "status" : "GENERATED",
+    "description" : "Business logic for creating and managing orders.",
     "public_functions" : [ {
       "name" : "createOrder",
-      "parameters" : [ "CreateOrderRequest createOrderRequest" ],
-      "return_type" : "OrderResponse",
-      "description" : "Creates an order, calculates total, and initiates payment flow with Razorpay."
+      "parameters" : [ "CreateOrderRequestDTO requestDTO" ],
+      "return_type" : "OrderResponseDTO",
+      "description" : "Creates a new order, calculates total, and initiates payment with Razorpay."
     }, {
-      "name" : "handlePaymentSuccess",
+      "name" : "confirmOrderPayment",
       "parameters" : [ "String razorpayOrderId", "String razorpayPaymentId", "String razorpaySignature" ],
       "return_type" : "void",
-      "description" : "Verifies Razorpay webhook signature and updates order status to CONFIRMED."
+      "description" : "Verifies Razorpay payment signature and updates order status to CONFIRMED."
+    }, {
+      "name" : "getOrderById",
+      "parameters" : [ "UUID orderId" ],
+      "return_type" : "Order",
+      "description" : "Retrieves full order details by its ID."
     } ],
     "public_variables" : [ ],
     "api_endpoints" : [ ],
     "api_endpoints_consumed" : [ ],
-    "imports_from" : [ "CreateOrderRequest.java", "OrderResponse.java" ],
-    "depends_on" : [ "OrderRepository.java", "MenuItemRepository.java", "PaymentService.java" ]
+    "imports_from" : [ "backend/src/main/java/com/amritapurevegrestaurant/dto/CreateOrderRequestDTO.java", "backend/src/main/java/com/amritapurevegrestaurant/dto/OrderResponseDTO.java", "backend/src/main/java/com/amritapurevegrestaurant/model/Order.java" ],
+    "depends_on" : [ "backend/src/main/java/com/amritapurevegrestaurant/repository/OrderRepository.java", "backend/src/main/java/com/amritapurevegrestaurant/repository/MenuItemRepository.java", "backend/src/main/java/com/amritapurevegrestaurant/service/PaymentService.java", "backend/src/main/java/com/amritapurevegrestaurant/service/NotificationService.java" ]
+  }, {
+    "file_name" : "ReservationService.java",
+    "file_path" : "backend/src/main/java/com/amritapurevegrestaurant/service/ReservationService.java",
+    "file_type" : "BACKEND",
+    "layer" : "SERVICE",
+    "created_date" : "2024-05-22",
+    "updated_date" : "2026-06-03",
+    "status" : "GENERATED",
+    "description" : "Business logic for managing table reservations.",
+    "public_functions" : [ {
+      "name" : "createReservation",
+      "parameters" : [ "CreateReservationRequestDTO requestDTO" ],
+      "return_type" : "ReservationResponseDTO",
+      "description" : "Creates a new table reservation after checking for availability."
+    }, {
+      "name" : "getAvailableSlots",
+      "parameters" : [ "LocalDate date" ],
+      "return_type" : "List<LocalTime>",
+      "description" : "Returns a list of available reservation time slots for a given date."
+    } ],
+    "public_variables" : [ ],
+    "api_endpoints" : [ ],
+    "api_endpoints_consumed" : [ ],
+    "imports_from" : [ "backend/src/main/java/com/amritapurevegrestaurant/dto/CreateReservationRequestDTO.java", "backend/src/main/java/com/amritapurevegrestaurant/dto/ReservationResponseDTO.java" ],
+    "depends_on" : [ "backend/src/main/java/com/amritapurevegrestaurant/repository/ReservationRepository.java", "backend/src/main/java/com/amritapurevegrestaurant/service/NotificationService.java" ]
   }, {
     "file_name" : "PaymentService.java",
     "file_path" : "backend/src/main/java/com/amritapurevegrestaurant/service/PaymentService.java",
     "file_type" : "BACKEND",
     "layer" : "SERVICE",
     "created_date" : "2024-05-22",
-    "updated_date" : "2024-05-22",
-    "status" : "PLANNED",
-    "description" : "Service to interact with the Razorpay API.",
+    "updated_date" : "2026-06-03",
+    "status" : "GENERATED",
+    "description" : "Service to interact with the Razorpay payment gateway.",
     "public_functions" : [ {
       "name" : "createRazorpayOrder",
-      "parameters" : [ "BigDecimal amount" ],
+      "parameters" : [ "BigDecimal amount", "String receiptId" ],
       "return_type" : "String",
-      "description" : "Calls Razorpay API to create an order and returns the Razorpay order ID."
+      "description" : "Creates an order on Razorpay and returns the Razorpay Order ID."
     }, {
       "name" : "verifyPaymentSignature",
       "parameters" : [ "String razorpayOrderId", "String razorpayPaymentId", "String razorpaySignature" ],
       "return_type" : "boolean",
-      "description" : "Verifies the signature from the Razorpay webhook to confirm payment authenticity."
+      "description" : "Verifies the signature returned by Razorpay webhook to confirm payment authenticity."
     } ],
     "public_variables" : [ ],
     "api_endpoints" : [ ],
@@ -667,153 +660,189 @@
     "imports_from" : [ ],
     "depends_on" : [ ]
   }, {
-    "file_name" : "ReservationService.java",
-    "file_path" : "backend/src/main/java/com/amritapurevegrestaurant/service/ReservationService.java",
+    "file_name" : "NotificationService.java",
+    "file_path" : "backend/src/main/java/com/amritapurevegrestaurant/service/NotificationService.java",
     "file_type" : "BACKEND",
     "layer" : "SERVICE",
     "created_date" : "2024-05-22",
-    "updated_date" : "2024-05-22",
-    "status" : "PLANNED",
-    "description" : "Handles business logic for creating and checking reservations.",
+    "updated_date" : "2026-06-03",
+    "status" : "GENERATED",
+    "description" : "Handles sending asynchronous notifications like email or SMS.",
     "public_functions" : [ {
-      "name" : "createReservation",
-      "parameters" : [ "CreateReservationRequest reservationRequest" ],
-      "return_type" : "ReservationResponse",
-      "description" : "Creates a new reservation after checking for availability."
+      "name" : "sendOrderConfirmationEmail",
+      "parameters" : [ "Order order" ],
+      "return_type" : "void",
+      "description" : "Sends an order confirmation email to the customer asynchronously."
     }, {
-      "name" : "getAvailableSlots",
-      "parameters" : [ "LocalDate date", "int partySize" ],
-      "return_type" : "List<LocalTime>",
-      "description" : "Returns a list of available time slots for a given date and party size."
+      "name" : "sendReservationConfirmationEmail",
+      "parameters" : [ "Reservation reservation" ],
+      "return_type" : "void",
+      "description" : "Sends a reservation confirmation email to the customer asynchronously."
     } ],
     "public_variables" : [ ],
     "api_endpoints" : [ ],
     "api_endpoints_consumed" : [ ],
-    "imports_from" : [ "CreateReservationRequest.java", "ReservationResponse.java" ],
-    "depends_on" : [ "ReservationRepository.java" ]
+    "imports_from" : [ "backend/src/main/java/com/amritapurevegrestaurant/model/Order.java", "backend/src/main/java/com/amritapurevegrestaurant/model/Reservation.java" ],
+    "depends_on" : [ ]
   }, {
     "file_name" : "MenuController.java",
     "file_path" : "backend/src/main/java/com/amritapurevegrestaurant/controller/MenuController.java",
     "file_type" : "BACKEND",
     "layer" : "CONTROLLER",
     "created_date" : "2024-05-22",
-    "updated_date" : "2024-05-22",
-    "status" : "PLANNED",
-    "description" : "Exposes REST endpoints for accessing the menu.",
+    "updated_date" : "2026-06-03",
+    "status" : "GENERATED",
+    "description" : "REST controller for menu-related endpoints.",
     "public_functions" : [ {
       "name" : "getMenu",
-      "parameters" : [ ],
-      "return_type" : "ResponseEntity<List<MenuCategoryDto>>",
-      "description" : "Handles GET requests to fetch the entire menu."
+      "parameters" : [ "@RequestParam Optional<String> category" ],
+      "return_type" : "ResponseEntity<List<MenuItemDTO>>",
+      "description" : "Handles requests to fetch menu items."
+    }, {
+      "name" : "getMenuItem",
+      "parameters" : [ "@PathVariable UUID id" ],
+      "return_type" : "ResponseEntity<MenuItemDTO>",
+      "description" : "Handles requests to fetch a single menu item."
     } ],
     "public_variables" : [ ],
     "api_endpoints" : [ {
       "method" : "GET",
-      "path" : "/api/v1/menu",
+      "path" : "/api/v1/menu/items",
       "request_body" : "null",
-      "response_body" : "List<MenuCategoryDto>",
-      "description" : "Get the full restaurant menu, organized by category."
+      "response_body" : "List<MenuItemDTO>",
+      "description" : "Get all menu items, with an optional 'category' query parameter."
+    }, {
+      "method" : "GET",
+      "path" : "/api/v1/menu/items/{id}",
+      "request_body" : "null",
+      "response_body" : "MenuItemDTO",
+      "description" : "Get a specific menu item by its UUID."
     } ],
     "api_endpoints_consumed" : [ ],
-    "imports_from" : [ "MenuCategoryDto.java", "MenuService.java" ],
-    "depends_on" : [ "MenuService.java" ]
+    "imports_from" : [ "backend/src/main/java/com/amritapurevegrestaurant/dto/MenuItemDTO.java" ],
+    "depends_on" : [ "backend/src/main/java/com/amritapurevegrestaurant/service/MenuService.java" ]
   }, {
     "file_name" : "OrderController.java",
     "file_path" : "backend/src/main/java/com/amritapurevegrestaurant/controller/OrderController.java",
     "file_type" : "BACKEND",
     "layer" : "CONTROLLER",
     "created_date" : "2024-05-22",
-    "updated_date" : "2024-05-22",
-    "status" : "PLANNED",
-    "description" : "Exposes REST endpoints for creating and managing orders.",
+    "updated_date" : "2026-06-03",
+    "status" : "GENERATED",
+    "description" : "REST controller for order-related endpoints.",
     "public_functions" : [ {
       "name" : "createOrder",
-      "parameters" : [ "CreateOrderRequest createOrderRequest" ],
-      "return_type" : "ResponseEntity<OrderResponse>",
-      "description" : "Handles POST requests to create a new order."
+      "parameters" : [ "@RequestBody @Valid CreateOrderRequestDTO requestDTO" ],
+      "return_type" : "ResponseEntity<OrderResponseDTO>",
+      "description" : "Handles new order creation requests."
     } ],
     "public_variables" : [ ],
     "api_endpoints" : [ {
       "method" : "POST",
       "path" : "/api/v1/orders",
-      "request_body" : "CreateOrderRequest",
-      "response_body" : "OrderResponse",
-      "description" : "Create a new order and initiate the payment process."
+      "request_body" : "CreateOrderRequestDTO",
+      "response_body" : "OrderResponseDTO",
+      "description" : "Create a new food order and initiate payment."
     } ],
     "api_endpoints_consumed" : [ ],
-    "imports_from" : [ "CreateOrderRequest.java", "OrderResponse.java", "OrderService.java" ],
-    "depends_on" : [ "OrderService.java" ]
+    "imports_from" : [ "backend/src/main/java/com/amritapurevegrestaurant/dto/CreateOrderRequestDTO.java", "backend/src/main/java/com/amritapurevegrestaurant/dto/OrderResponseDTO.java" ],
+    "depends_on" : [ "backend/src/main/java/com/amritapurevegrestaurant/service/OrderService.java" ]
   }, {
-    "file_name" : "PaymentWebhookController.java",
-    "file_path" : "backend/src/main/java/com/amritapurevegrestaurant/controller/PaymentWebhookController.java",
+    "file_name" : "PaymentController.java",
+    "file_path" : "backend/src/main/java/com/amritapurevegrestaurant/controller/PaymentController.java",
     "file_type" : "BACKEND",
     "layer" : "CONTROLLER",
     "created_date" : "2024-05-22",
-    "updated_date" : "2024-05-22",
-    "status" : "PLANNED",
-    "description" : "Handles incoming webhooks from Razorpay.",
+    "updated_date" : "2026-06-03",
+    "status" : "GENERATED",
+    "description" : "REST controller for handling payment webhooks.",
     "public_functions" : [ {
       "name" : "handleRazorpayWebhook",
-      "parameters" : [ "String payload", "String signature" ],
+      "parameters" : [ "@RequestBody String payload", "@RequestHeader(\"X-Razorpay-Signature\") String signature" ],
       "return_type" : "ResponseEntity<Void>",
-      "description" : "Receives and processes payment confirmation webhooks from Razorpay."
+      "description" : "Handles webhook notifications from Razorpay to confirm payments."
     } ],
     "public_variables" : [ ],
     "api_endpoints" : [ {
       "method" : "POST",
-      "path" : "/api/v1/payments/webhook/razorpay",
-      "request_body" : "JSON payload from Razorpay",
+      "path" : "/api/v1/payments/webhook",
+      "request_body" : "Razorpay Webhook Payload (JSON String)",
       "response_body" : "200 OK or 400 Bad Request",
-      "description" : "Webhook endpoint for Razorpay to send payment status updates."
+      "description" : "Webhook endpoint for Razorpay to send payment confirmation."
     } ],
     "api_endpoints_consumed" : [ ],
-    "imports_from" : [ "OrderService.java" ],
-    "depends_on" : [ "OrderService.java" ]
+    "imports_from" : [ ],
+    "depends_on" : [ "backend/src/main/java/com/amritapurevegrestaurant/service/OrderService.java" ]
   }, {
     "file_name" : "ReservationController.java",
     "file_path" : "backend/src/main/java/com/amritapurevegrestaurant/controller/ReservationController.java",
     "file_type" : "BACKEND",
     "layer" : "CONTROLLER",
     "created_date" : "2024-05-22",
-    "updated_date" : "2024-05-22",
-    "status" : "PLANNED",
-    "description" : "Exposes REST endpoints for table reservations.",
+    "updated_date" : "2026-06-03",
+    "status" : "GENERATED",
+    "description" : "REST controller for reservation-related endpoints.",
     "public_functions" : [ {
       "name" : "createReservation",
-      "parameters" : [ "CreateReservationRequest reservationRequest" ],
-      "return_type" : "ResponseEntity<ReservationResponse>",
-      "description" : "Handles POST requests to create a new reservation."
+      "parameters" : [ "@RequestBody @Valid CreateReservationRequestDTO requestDTO" ],
+      "return_type" : "ResponseEntity<ReservationResponseDTO>",
+      "description" : "Handles new table reservation requests."
     }, {
-      "name" : "getAvailability",
-      "parameters" : [ "LocalDate date", "int partySize" ],
+      "name" : "getAvailableSlots",
+      "parameters" : [ "@RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate date" ],
       "return_type" : "ResponseEntity<List<LocalTime>>",
-      "description" : "Handles GET requests to check for available reservation slots."
+      "description" : "Handles requests for available reservation slots."
     } ],
     "public_variables" : [ ],
     "api_endpoints" : [ {
       "method" : "POST",
       "path" : "/api/v1/reservations",
-      "request_body" : "CreateReservationRequest",
-      "response_body" : "ReservationResponse",
-      "description" : "Submit a new table reservation request."
+      "request_body" : "CreateReservationRequestDTO",
+      "response_body" : "ReservationResponseDTO",
+      "description" : "Create a new table reservation."
     }, {
       "method" : "GET",
-      "path" : "/api/v1/reservations/availability?date={date}&partySize={partySize}",
+      "path" : "/api/v1/reservations/slots",
       "request_body" : "null",
       "response_body" : "List<LocalTime>",
-      "description" : "Get available time slots for a given date and party size."
+      "description" : "Get available reservation time slots for a given date (e.g., ?date=2024-12-25)."
     } ],
     "api_endpoints_consumed" : [ ],
-    "imports_from" : [ "CreateReservationRequest.java", "ReservationResponse.java", "ReservationService.java" ],
-    "depends_on" : [ "ReservationService.java" ]
+    "imports_from" : [ "backend/src/main/java/com/amritapurevegrestaurant/dto/CreateReservationRequestDTO.java", "backend/src/main/java/com/amritapurevegrestaurant/dto/ReservationResponseDTO.java" ],
+    "depends_on" : [ "backend/src/main/java/com/amritapurevegrestaurant/service/ReservationService.java" ]
+  }, {
+    "file_name" : "GlobalExceptionHandler.java",
+    "file_path" : "backend/src/main/java/com/amritapurevegrestaurant/exception/GlobalExceptionHandler.java",
+    "file_type" : "BACKEND",
+    "layer" : "EXCEPTION",
+    "created_date" : "2024-05-22",
+    "updated_date" : "2026-06-03",
+    "status" : "GENERATED",
+    "description" : "Centralized exception handler for the REST API.",
+    "public_functions" : [ {
+      "name" : "handleResourceNotFoundException",
+      "parameters" : [ "ResourceNotFoundException ex", "WebRequest request" ],
+      "return_type" : "ResponseEntity<ErrorResponse>",
+      "description" : "Handles 404 Not Found errors."
+    }, {
+      "name" : "handleMethodArgumentNotValid",
+      "parameters" : [ "MethodArgumentNotValidException ex", "HttpHeaders headers", "HttpStatusCode status", "WebRequest request" ],
+      "return_type" : "ResponseEntity<Object>",
+      "description" : "Handles 400 Bad Request errors from validation failures."
+    } ],
+    "public_variables" : [ ],
+    "api_endpoints" : [ ],
+    "api_endpoints_consumed" : [ ],
+    "imports_from" : [ "backend/src/main/java/com/amritapurevegrestaurant/dto/ErrorResponse.java", "backend/src/main/java/com/amritapurevegrestaurant/exception/ResourceNotFoundException.java" ],
+    "depends_on" : [ ]
   }, {
     "file_name" : "ResourceNotFoundException.java",
     "file_path" : "backend/src/main/java/com/amritapurevegrestaurant/exception/ResourceNotFoundException.java",
     "file_type" : "BACKEND",
     "layer" : "EXCEPTION",
     "created_date" : "2024-05-22",
-    "updated_date" : "2024-05-22",
-    "status" : "PLANNED",
+    "updated_date" : "2026-06-03",
+    "status" : "GENERATED",
     "description" : "Custom exception for cases where a requested resource is not found.",
     "public_functions" : [ {
       "name" : "ResourceNotFoundException",
@@ -827,222 +856,95 @@
     "imports_from" : [ ],
     "depends_on" : [ ]
   }, {
-    "file_name" : "GlobalExceptionHandler.java",
-    "file_path" : "backend/src/main/java/com/amritapurevegrestaurant/exception/GlobalExceptionHandler.java",
+    "file_name" : "SecurityConfig.java",
+    "file_path" : "backend/src/main/java/com/amritapurevegrestaurant/config/SecurityConfig.java",
     "file_type" : "BACKEND",
-    "layer" : "EXCEPTION",
+    "layer" : "CONFIG",
     "created_date" : "2024-05-22",
-    "updated_date" : "2024-05-22",
-    "status" : "PLANNED",
-    "description" : "Centralized exception handler for the application.",
+    "updated_date" : "2026-06-03",
+    "status" : "GENERATED",
+    "description" : "Spring Security configuration for defining access rules.",
     "public_functions" : [ {
-      "name" : "handleResourceNotFoundException",
-      "parameters" : [ "ResourceNotFoundException ex", "WebRequest request" ],
-      "return_type" : "ResponseEntity<ErrorResponse>",
-      "description" : "Handles ResourceNotFoundException and returns a 404 response."
-    }, {
-      "name" : "handleMethodArgumentNotValid",
-      "parameters" : [ "MethodArgumentNotValidException ex", "HttpHeaders headers", "HttpStatusCode status", "WebRequest request" ],
-      "return_type" : "ResponseEntity<Object>",
-      "description" : "Handles validation exceptions and returns a 400 response."
+      "name" : "securityFilterChain",
+      "parameters" : [ "HttpSecurity http" ],
+      "return_type" : "SecurityFilterChain",
+      "description" : "Configures HTTP security, permitting access to public APIs and securing others."
     } ],
     "public_variables" : [ ],
-    "api_endpoints" : [ ],
-    "api_endpoints_consumed" : [ ],
-    "imports_from" : [ "ErrorResponse.java", "ResourceNotFoundException.java" ],
-    "depends_on" : [ ]
-  }, {
-    "file_name" : "ErrorResponse.java",
-    "file_path" : "backend/src/main/java/com/amritapurevegrestaurant/dto/ErrorResponse.java",
-    "file_type" : "BACKEND",
-    "layer" : "DTO",
-    "created_date" : "2024-05-22",
-    "updated_date" : "2024-05-22",
-    "status" : "PLANNED",
-    "description" : "Standard structure for API error responses.",
-    "public_functions" : [ ],
-    "public_variables" : [ {
-      "name" : "timestamp",
-      "type" : "OffsetDateTime",
-      "description" : "Time of the error."
-    }, {
-      "name" : "status",
-      "type" : "int",
-      "description" : "HTTP status code."
-    }, {
-      "name" : "error",
-      "type" : "String",
-      "description" : "HTTP status message."
-    }, {
-      "name" : "message",
-      "type" : "String",
-      "description" : "A descriptive error message."
-    }, {
-      "name" : "path",
-      "type" : "String",
-      "description" : "The path where the error occurred."
-    } ],
     "api_endpoints" : [ ],
     "api_endpoints_consumed" : [ ],
     "imports_from" : [ ],
-    "depends_on" : [ ]
-  }, {
-    "file_name" : "App.tsx",
-    "file_path" : "frontend/src/App.tsx",
-    "file_type" : "FRONTEND",
-    "layer" : "PAGE",
-    "created_date" : "2024-05-22",
-    "updated_date" : "2024-05-22",
-    "status" : "PLANNED",
-    "description" : "Root application component that sets up routing.",
-    "public_functions" : [ {
-      "name" : "App",
-      "parameters" : [ ],
-      "return_type" : "JSX.Element",
-      "description" : "Main component with React Router configuration."
-    } ],
-    "public_variables" : [ ],
-    "api_endpoints" : [ ],
-    "api_endpoints_consumed" : [ ],
-    "imports_from" : [ "HomePage.tsx", "MenuPage.tsx", "ReservationPage.tsx", "OrderConfirmationPage.tsx", "Header.tsx", "Footer.tsx" ],
     "depends_on" : [ ]
   }, {
     "file_name" : "client.ts",
     "file_path" : "frontend/src/api/client.ts",
     "file_type" : "FRONTEND",
-    "layer" : "UTIL",
+    "layer" : "SERVICE",
     "created_date" : "2024-05-22",
-    "updated_date" : "2024-05-22",
-    "status" : "PLANNED",
-    "description" : "Axios instance configured with the base API URL.",
+    "updated_date" : "2026-06-03",
+    "status" : "GENERATED",
+    "description" : "Axios singleton for making HTTP requests to the backend API.",
     "public_functions" : [ ],
     "public_variables" : [ {
       "name" : "apiClient",
       "type" : "AxiosInstance",
-      "description" : "Default export of the configured Axios client."
+      "description" : "Default export of the configured Axios instance."
     } ],
     "api_endpoints" : [ ],
     "api_endpoints_consumed" : [ ],
     "imports_from" : [ ],
     "depends_on" : [ ]
   }, {
-    "file_name" : "MenuPage.tsx",
-    "file_path" : "frontend/src/pages/MenuPage.tsx",
+    "file_name" : "menuService.ts",
+    "file_path" : "frontend/src/services/menuService.ts",
     "file_type" : "FRONTEND",
-    "layer" : "PAGE",
+    "layer" : "SERVICE",
     "created_date" : "2024-05-22",
-    "updated_date" : "2024-05-22",
-    "status" : "PLANNED",
-    "description" : "Displays the full restaurant menu.",
+    "updated_date" : "2026-06-03",
+    "status" : "GENERATED",
+    "description" : "Provides functions to interact with the menu API endpoints.",
     "public_functions" : [ {
-      "name" : "MenuPage",
-      "parameters" : [ ],
-      "return_type" : "JSX.Element",
-      "description" : "Page component for the menu."
-    } ],
-    "public_variables" : [ ],
-    "api_endpoints" : [ ],
-    "api_endpoints_consumed" : [ {
-      "method" : "GET",
-      "path" : "/api/v1/menu",
-      "request_body" : null,
-      "response_body" : null,
-      "description" : "Fetches the entire menu to display."
-    } ],
-    "imports_from" : [ "useMenu.ts", "MenuCategorySection.tsx", "ShoppingCart.tsx" ],
-    "depends_on" : [ ]
-  }, {
-    "file_name" : "ReservationPage.tsx",
-    "file_path" : "frontend/src/pages/ReservationPage.tsx",
-    "file_type" : "FRONTEND",
-    "layer" : "PAGE",
-    "created_date" : "2024-05-22",
-    "updated_date" : "2024-05-22",
-    "status" : "PLANNED",
-    "description" : "Allows users to book a table.",
-    "public_functions" : [ {
-      "name" : "ReservationPage",
-      "parameters" : [ ],
-      "return_type" : "JSX.Element",
-      "description" : "Page component for making reservations."
-    } ],
-    "public_variables" : [ ],
-    "api_endpoints" : [ ],
-    "api_endpoints_consumed" : [ {
-      "method" : "GET",
-      "path" : "/api/v1/reservations/availability?date={date}&partySize={partySize}",
-      "request_body" : null,
-      "response_body" : null,
-      "description" : "Fetches available time slots."
+      "name" : "getMenuItems",
+      "parameters" : [ "category?: string" ],
+      "return_type" : "Promise<MenuItem[]>",
+      "description" : "Fetches all menu items, optionally by category."
     }, {
-      "method" : "POST",
-      "path" : "/api/v1/reservations",
-      "request_body" : null,
-      "response_body" : null,
-      "description" : "Submits the reservation form."
-    } ],
-    "imports_from" : [ "ReservationForm.tsx", "useReservations.ts" ],
-    "depends_on" : [ ]
-  }, {
-    "file_name" : "MenuItemCard.tsx",
-    "file_path" : "frontend/src/components/menu/MenuItemCard.tsx",
-    "file_type" : "FRONTEND",
-    "layer" : "COMPONENT",
-    "created_date" : "2024-05-22",
-    "updated_date" : "2024-05-22",
-    "status" : "PLANNED",
-    "description" : "Displays a single menu item with an 'Add to Cart' button.",
-    "public_functions" : [ {
-      "name" : "MenuItemCard",
-      "parameters" : [ "{ item: MenuItem }" ],
-      "return_type" : "JSX.Element",
-      "description" : "Renders a card for a menu item."
-    } ],
-    "public_variables" : [ ],
-    "api_endpoints" : [ ],
-    "api_endpoints_consumed" : [ ],
-    "imports_from" : [ "CartContext.tsx", "types/index.ts" ],
-    "depends_on" : [ ]
-  }, {
-    "file_name" : "useMenu.ts",
-    "file_path" : "frontend/src/hooks/useMenu.ts",
-    "file_type" : "FRONTEND",
-    "layer" : "HOOK",
-    "created_date" : "2024-05-22",
-    "updated_date" : "2024-05-22",
-    "status" : "PLANNED",
-    "description" : "React Query hook for fetching menu data.",
-    "public_functions" : [ {
-      "name" : "useMenu",
-      "parameters" : [ ],
-      "return_type" : "{ data: MenuCategory[], isLoading: boolean, isError: boolean }",
-      "description" : "Custom hook to fetch and cache the full menu."
+      "name" : "getMenuItemById",
+      "parameters" : [ "id: string" ],
+      "return_type" : "Promise<MenuItem>",
+      "description" : "Fetches a single menu item by its ID."
     } ],
     "public_variables" : [ ],
     "api_endpoints" : [ ],
     "api_endpoints_consumed" : [ {
       "method" : "GET",
-      "path" : "/api/v1/menu",
+      "path" : "/api/v1/menu/items",
       "request_body" : null,
       "response_body" : null,
-      "description" : "Fetches menu data from the backend."
+      "description" : "Fetches the list of menu items."
+    }, {
+      "method" : "GET",
+      "path" : "/api/v1/menu/items/{id}",
+      "request_body" : null,
+      "response_body" : null,
+      "description" : "Fetches a single menu item."
     } ],
-    "imports_from" : [ "client.ts", "types/index.ts" ],
+    "imports_from" : [ "frontend/src/api/client.ts", "frontend/src/types/index.ts" ],
     "depends_on" : [ ]
   }, {
-    "file_name" : "useOrder.ts",
-    "file_path" : "frontend/src/hooks/useOrder.ts",
+    "file_name" : "orderService.ts",
+    "file_path" : "frontend/src/services/orderService.ts",
     "file_type" : "FRONTEND",
-    "layer" : "HOOK",
+    "layer" : "SERVICE",
     "created_date" : "2024-05-22",
-    "updated_date" : "2024-05-22",
-    "status" : "PLANNED",
-    "description" : "React Query hook for creating an order and handling payment.",
+    "updated_date" : "2026-06-03",
+    "status" : "GENERATED",
+    "description" : "Provides functions to interact with the order API endpoints.",
     "public_functions" : [ {
-      "name" : "useCreateOrder",
-      "parameters" : [ ],
-      "return_type" : "UseMutationResult<OrderResponse, Error, CreateOrderRequest>",
-      "description" : "Provides a mutation function to create an order and initiate Razorpay checkout."
+      "name" : "createOrder",
+      "parameters" : [ "order: CreateOrderRequest" ],
+      "return_type" : "Promise<OrderResponse>",
+      "description" : "Submits a new order to the backend."
     } ],
     "public_variables" : [ ],
     "api_endpoints" : [ ],
@@ -1051,44 +953,182 @@
       "path" : "/api/v1/orders",
       "request_body" : null,
       "response_body" : null,
-      "description" : "Sends order details to the backend to create an order."
+      "description" : "Creates a new order."
     } ],
-    "imports_from" : [ "client.ts", "types/index.ts" ],
+    "imports_from" : [ "frontend/src/api/client.ts", "frontend/src/types/index.ts" ],
     "depends_on" : [ ]
   }, {
-    "file_name" : "types/index.ts",
+    "file_name" : "reservationService.ts",
+    "file_path" : "frontend/src/services/reservationService.ts",
+    "file_type" : "FRONTEND",
+    "layer" : "SERVICE",
+    "created_date" : "2024-05-22",
+    "updated_date" : "2026-06-03",
+    "status" : "GENERATED",
+    "description" : "Provides functions to interact with the reservation API endpoints.",
+    "public_functions" : [ {
+      "name" : "createReservation",
+      "parameters" : [ "reservation: CreateReservationRequest" ],
+      "return_type" : "Promise<ReservationResponse>",
+      "description" : "Submits a new reservation request."
+    }, {
+      "name" : "getAvailableSlots",
+      "parameters" : [ "date: string" ],
+      "return_type" : "Promise<string[]>",
+      "description" : "Fetches available reservation slots for a given date."
+    } ],
+    "public_variables" : [ ],
+    "api_endpoints" : [ ],
+    "api_endpoints_consumed" : [ {
+      "method" : "POST",
+      "path" : "/api/v1/reservations",
+      "request_body" : null,
+      "response_body" : null,
+      "description" : "Creates a new reservation."
+    }, {
+      "method" : "GET",
+      "path" : "/api/v1/reservations/slots",
+      "request_body" : null,
+      "response_body" : null,
+      "description" : "Gets available time slots."
+    } ],
+    "imports_from" : [ "frontend/src/api/client.ts", "frontend/src/types/index.ts" ],
+    "depends_on" : [ ]
+  }, {
+    "file_name" : "useMenu.ts",
+    "file_path" : "frontend/src/hooks/useMenu.ts",
+    "file_type" : "FRONTEND",
+    "layer" : "HOOK",
+    "created_date" : "2024-05-22",
+    "updated_date" : "2026-06-03",
+    "status" : "GENERATED",
+    "description" : "React Query hooks for fetching menu data.",
+    "public_functions" : [ {
+      "name" : "useMenuItems",
+      "parameters" : [ "category?: string" ],
+      "return_type" : "UseQueryResult<MenuItem[], Error>",
+      "description" : "Hook to fetch and cache all menu items."
+    } ],
+    "public_variables" : [ ],
+    "api_endpoints" : [ ],
+    "api_endpoints_consumed" : [ ],
+    "imports_from" : [ "frontend/src/services/menuService.ts", "frontend/src/types/index.ts" ],
+    "depends_on" : [ ]
+  }, {
+    "file_name" : "useOrders.ts",
+    "file_path" : "frontend/src/hooks/useOrders.ts",
+    "file_type" : "FRONTEND",
+    "layer" : "HOOK",
+    "created_date" : "2024-05-22",
+    "updated_date" : "2026-06-03",
+    "status" : "GENERATED",
+    "description" : "React Query hooks for creating orders.",
+    "public_functions" : [ {
+      "name" : "useCreateOrder",
+      "parameters" : [ ],
+      "return_type" : "UseMutationResult<OrderResponse, Error, CreateOrderRequest>",
+      "description" : "Hook to create a new order."
+    } ],
+    "public_variables" : [ ],
+    "api_endpoints" : [ ],
+    "api_endpoints_consumed" : [ ],
+    "imports_from" : [ "frontend/src/services/orderService.ts", "frontend/src/types/index.ts" ],
+    "depends_on" : [ ]
+  }, {
+    "file_name" : "useReservations.ts",
+    "file_path" : "frontend/src/hooks/useReservations.ts",
+    "file_type" : "FRONTEND",
+    "layer" : "HOOK",
+    "created_date" : "2024-05-22",
+    "updated_date" : "2026-06-03",
+    "status" : "GENERATED",
+    "description" : "React Query hooks for creating and fetching reservations.",
+    "public_functions" : [ {
+      "name" : "useCreateReservation",
+      "parameters" : [ ],
+      "return_type" : "UseMutationResult<ReservationResponse, Error, CreateReservationRequest>",
+      "description" : "Hook to create a new reservation."
+    } ],
+    "public_variables" : [ ],
+    "api_endpoints" : [ ],
+    "api_endpoints_consumed" : [ ],
+    "imports_from" : [ "frontend/src/services/reservationService.ts", "frontend/src/types/index.ts" ],
+    "depends_on" : [ ]
+  }, {
+    "file_name" : "App.tsx",
+    "file_path" : "frontend/src/App.tsx",
+    "file_type" : "FRONTEND",
+    "layer" : "PAGE",
+    "created_date" : "2024-05-22",
+    "updated_date" : "2026-06-03",
+    "status" : "GENERATED",
+    "description" : "Root application component with routing.",
+    "public_functions" : [ {
+      "name" : "App",
+      "parameters" : [ ],
+      "return_type" : "JSX.Element",
+      "description" : "Sets up React Router, Query Client, and renders pages based on URL."
+    } ],
+    "public_variables" : [ ],
+    "api_endpoints" : [ ],
+    "api_endpoints_consumed" : [ ],
+    "imports_from" : [ "frontend/src/pages/HomePage.tsx", "frontend/src/pages/MenuPage.tsx", "frontend/src/pages/ReservationPage.tsx", "frontend/src/pages/CheckoutPage.tsx", "frontend/src/context/CartContext.tsx" ],
+    "depends_on" : [ ]
+  }, {
+    "file_name" : "CartContext.tsx",
+    "file_path" : "frontend/src/context/CartContext.tsx",
+    "file_type" : "FRONTEND",
+    "layer" : "CONTEXT",
+    "created_date" : "2024-05-22",
+    "updated_date" : "2026-06-03",
+    "status" : "GENERATED",
+    "description" : "React context for managing the state of the shopping cart.",
+    "public_functions" : [ {
+      "name" : "CartProvider",
+      "parameters" : [ "{ children: React.ReactNode }" ],
+      "return_type" : "JSX.Element",
+      "description" : "Provider component that holds the cart state."
+    }, {
+      "name" : "useCart",
+      "parameters" : [ ],
+      "return_type" : "CartContextType",
+      "description" : "Hook to access cart state and actions."
+    } ],
+    "public_variables" : [ ],
+    "api_endpoints" : [ ],
+    "api_endpoints_consumed" : [ ],
+    "imports_from" : [ "frontend/src/types/index.ts" ],
+    "depends_on" : [ ]
+  }, {
+    "file_name" : "index.ts",
     "file_path" : "frontend/src/types/index.ts",
     "file_type" : "FRONTEND",
     "layer" : "UTIL",
     "created_date" : "2024-05-22",
-    "updated_date" : "2024-05-22",
-    "status" : "PLANNED",
-    "description" : "TypeScript type definitions that mirror backend DTOs.",
+    "updated_date" : "2026-06-03",
+    "status" : "GENERATED",
+    "description" : "Defines shared TypeScript types that mirror backend DTOs.",
     "public_functions" : [ ],
     "public_variables" : [ {
       "name" : "MenuItem",
       "type" : "type",
-      "description" : "Matches MenuItemDto.java"
-    }, {
-      "name" : "MenuCategory",
-      "type" : "type",
-      "description" : "Matches MenuCategoryDto.java"
+      "description" : "Matches MenuItemDTO."
     }, {
       "name" : "CreateOrderRequest",
       "type" : "type",
-      "description" : "Matches CreateOrderRequest.java"
+      "description" : "Matches CreateOrderRequestDTO."
     }, {
       "name" : "OrderResponse",
       "type" : "type",
-      "description" : "Matches OrderResponse.java"
+      "description" : "Matches OrderResponseDTO."
     }, {
       "name" : "CreateReservationRequest",
       "type" : "type",
-      "description" : "Matches CreateReservationRequest.java"
+      "description" : "Matches CreateReservationRequestDTO."
     }, {
       "name" : "ReservationResponse",
       "type" : "type",
-      "description" : "Matches ReservationResponse.java"
+      "description" : "Matches ReservationResponseDTO."
     } ],
     "api_endpoints" : [ ],
     "api_endpoints_consumed" : [ ],
